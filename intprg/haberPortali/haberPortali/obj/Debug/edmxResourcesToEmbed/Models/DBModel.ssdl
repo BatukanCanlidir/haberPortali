@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Haber">
+    <Key>
+      <PropertyRef Name="HaberId" />
+    </Key>
+    <Property Name="HaberId" Type="int" Nullable="false" />
+    <Property Name="HaberBaslik" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="HaberDetay" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="HaberTarih" Type="datetime" Nullable="false" />
+    <Property Name="HaberKategoriId" Type="int" Nullable="false" />
+    <Property Name="HaberUyeId" Type="int" Nullable="false" />
+    <Property Name="HaberOkuma" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Kategori">
+    <Key>
+      <PropertyRef Name="KategoriId" />
+    </Key>
+    <Property Name="KategoriId" Type="int" Nullable="false" />
+    <Property Name="KategoriAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Uye">
+    <Key>
+      <PropertyRef Name="UyeId" />
+    </Key>
+    <Property Name="UyeId" Type="int" Nullable="false" />
+    <Property Name="KullaniciAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Sifre" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AdSoyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="UyeAdmin" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Haber_ToKategori">
+    <End Role="Kategori" Type="Self.Kategori" Multiplicity="1" />
+    <End Role="Haber" Type="Self.Haber" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategori">
+        <PropertyRef Name="KategoriId" />
+      </Principal>
+      <Dependent Role="Haber">
+        <PropertyRef Name="HaberKategoriId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Haber_ToUye">
+    <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
+    <End Role="Haber" Type="Self.Haber" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uye">
+        <PropertyRef Name="UyeId" />
+      </Principal>
+      <Dependent Role="Haber">
+        <PropertyRef Name="HaberUyeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB1ModelStoreContainer">
+    <EntitySet Name="Haber" EntityType="Self.Haber" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kategori" EntityType="Self.Kategori" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Uye" EntityType="Self.Uye" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Haber_ToKategori" Association="Self.FK_Haber_ToKategori">
+      <End Role="Kategori" EntitySet="Kategori" />
+      <End Role="Haber" EntitySet="Haber" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Haber_ToUye" Association="Self.FK_Haber_ToUye">
+      <End Role="Uye" EntitySet="Uye" />
+      <End Role="Haber" EntitySet="Haber" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

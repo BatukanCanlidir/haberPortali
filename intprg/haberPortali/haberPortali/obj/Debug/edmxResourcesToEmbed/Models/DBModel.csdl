@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Haber">
+    <Key>
+      <PropertyRef Name="HaberId" />
+    </Key>
+    <Property Name="HaberId" Type="Int32" Nullable="false" />
+    <Property Name="HaberBaslik" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="HaberDetay" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="HaberTarih" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="HaberKategoriId" Type="Int32" Nullable="false" />
+    <Property Name="HaberUyeId" Type="Int32" Nullable="false" />
+    <Property Name="HaberOkuma" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Kategori" Relationship="Self.FK_Haber_ToKategori" FromRole="Haber" ToRole="Kategori" />
+    <NavigationProperty Name="Uye" Relationship="Self.FK_Haber_ToUye" FromRole="Haber" ToRole="Uye" />
+  </EntityType>
+  <EntityType Name="Kategori">
+    <Key>
+      <PropertyRef Name="KategoriId" />
+    </Key>
+    <Property Name="KategoriId" Type="Int32" Nullable="false" />
+    <Property Name="KategoriAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Haber" Relationship="Self.FK_Haber_ToKategori" FromRole="Kategori" ToRole="Haber" />
+  </EntityType>
+  <EntityType Name="Uye">
+    <Key>
+      <PropertyRef Name="UyeId" />
+    </Key>
+    <Property Name="UyeId" Type="Int32" Nullable="false" />
+    <Property Name="KullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AdSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UyeAdmin" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Haber" Relationship="Self.FK_Haber_ToUye" FromRole="Uye" ToRole="Haber" />
+  </EntityType>
+  <Association Name="FK_Haber_ToKategori">
+    <End Role="Kategori" Type="Self.Kategori" Multiplicity="1" />
+    <End Role="Haber" Type="Self.Haber" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategori">
+        <PropertyRef Name="KategoriId" />
+      </Principal>
+      <Dependent Role="Haber">
+        <PropertyRef Name="HaberKategoriId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Haber_ToUye">
+    <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
+    <End Role="Haber" Type="Self.Haber" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uye">
+        <PropertyRef Name="UyeId" />
+      </Principal>
+      <Dependent Role="Haber">
+        <PropertyRef Name="HaberUyeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB1Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Haber" EntityType="Self.Haber" />
+    <EntitySet Name="Kategori" EntityType="Self.Kategori" />
+    <EntitySet Name="Uye" EntityType="Self.Uye" />
+    <AssociationSet Name="FK_Haber_ToKategori" Association="Self.FK_Haber_ToKategori">
+      <End Role="Kategori" EntitySet="Kategori" />
+      <End Role="Haber" EntitySet="Haber" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Haber_ToUye" Association="Self.FK_Haber_ToUye">
+      <End Role="Uye" EntitySet="Uye" />
+      <End Role="Haber" EntitySet="Haber" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

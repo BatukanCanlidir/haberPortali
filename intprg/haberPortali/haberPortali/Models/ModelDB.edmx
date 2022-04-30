@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB1Model1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Haber">
+          <Key>
+            <PropertyRef Name="haberId" />
+          </Key>
+          <Property Name="haberId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="haberBaslik" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="haberDetay" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="haberTarih" Type="datetime" Nullable="false" />
+          <Property Name="haberKategoriId" Type="int" Nullable="false" />
+          <Property Name="haberUyeId" Type="int" Nullable="false" />
+          <Property Name="haberOkuma" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="KategoriId" />
+          </Key>
+          <Property Name="KategoriId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KategoriAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Uye">
+          <Key>
+            <PropertyRef Name="uyeId" />
+          </Key>
+          <Property Name="uyeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kullaniciAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sifre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="adSoyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="fotograf" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="uyeAdmin" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Yorum">
+          <Key>
+            <PropertyRef Name="yorumId" />
+          </Key>
+          <Property Name="yorumId" Type="int" Nullable="false" />
+          <Property Name="yorumIcerik" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="yorumUyeId" Type="int" Nullable="false" />
+          <Property Name="yorumHaberId" Type="int" Nullable="false" />
+          <Property Name="yorumTarih" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Haber_ToKategori">
+          <End Role="Kategori" Type="Self.Kategori" Multiplicity="1" />
+          <End Role="Haber" Type="Self.Haber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="KategoriId" />
+            </Principal>
+            <Dependent Role="Haber">
+              <PropertyRef Name="haberKategoriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Haber_ToUye">
+          <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
+          <End Role="Haber" Type="Self.Haber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="uyeId" />
+            </Principal>
+            <Dependent Role="Haber">
+              <PropertyRef Name="haberUyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_ToHaber">
+          <End Role="Haber" Type="Self.Haber" Multiplicity="1" />
+          <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Haber">
+              <PropertyRef Name="haberId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="yorumHaberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_ToUye">
+          <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
+          <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="uyeId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="yorumUyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB1Model1StoreContainer">
+          <EntitySet Name="Haber" EntityType="Self.Haber" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kategori" EntityType="Self.Kategori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Uye" EntityType="Self.Uye" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Yorum" EntityType="Self.Yorum" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Haber_ToKategori" Association="Self.FK_Haber_ToKategori">
+            <End Role="Kategori" EntitySet="Kategori" />
+            <End Role="Haber" EntitySet="Haber" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Haber_ToUye" Association="Self.FK_Haber_ToUye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="Haber" EntitySet="Haber" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_ToHaber" Association="Self.FK_Yorum_ToHaber">
+            <End Role="Haber" EntitySet="Haber" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_ToUye" Association="Self.FK_Yorum_ToUye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB1Model1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Haber">
+          <Key>
+            <PropertyRef Name="haberId" />
+          </Key>
+          <Property Name="haberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="haberBaslik" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="haberDetay" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="haberTarih" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="haberKategoriId" Type="Int32" Nullable="false" />
+          <Property Name="haberUyeId" Type="Int32" Nullable="false" />
+          <Property Name="haberOkuma" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Kategori" Relationship="Self.FK_Haber_ToKategori" FromRole="Haber" ToRole="Kategori" />
+          <NavigationProperty Name="Uye" Relationship="Self.FK_Haber_ToUye" FromRole="Haber" ToRole="Uye" />
+          <NavigationProperty Name="Yorum" Relationship="Self.FK_Yorum_ToHaber" FromRole="Haber" ToRole="Yorum" />
+        </EntityType>
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="KategoriId" />
+          </Key>
+          <Property Name="KategoriId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KategoriAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Haber" Relationship="Self.FK_Haber_ToKategori" FromRole="Kategori" ToRole="Haber" />
+        </EntityType>
+        <EntityType Name="Uye">
+          <Key>
+            <PropertyRef Name="uyeId" />
+          </Key>
+          <Property Name="uyeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="adSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="fotograf" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="uyeAdmin" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Haber" Relationship="Self.FK_Haber_ToUye" FromRole="Uye" ToRole="Haber" />
+          <NavigationProperty Name="Yorum" Relationship="Self.FK_Yorum_ToUye" FromRole="Uye" ToRole="Yorum" />
+        </EntityType>
+        <EntityType Name="Yorum">
+          <Key>
+            <PropertyRef Name="yorumId" />
+          </Key>
+          <Property Name="yorumId" Type="Int32" Nullable="false" />
+          <Property Name="yorumIcerik" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="yorumUyeId" Type="Int32" Nullable="false" />
+          <Property Name="yorumHaberId" Type="Int32" Nullable="false" />
+          <Property Name="yorumTarih" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Haber" Relationship="Self.FK_Yorum_ToHaber" FromRole="Yorum" ToRole="Haber" />
+          <NavigationProperty Name="Uye" Relationship="Self.FK_Yorum_ToUye" FromRole="Yorum" ToRole="Uye" />
+        </EntityType>
+        <Association Name="FK_Haber_ToKategori">
+          <End Role="Kategori" Type="Self.Kategori" Multiplicity="1" />
+          <End Role="Haber" Type="Self.Haber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="KategoriId" />
+            </Principal>
+            <Dependent Role="Haber">
+              <PropertyRef Name="haberKategoriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Haber_ToUye">
+          <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
+          <End Role="Haber" Type="Self.Haber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="uyeId" />
+            </Principal>
+            <Dependent Role="Haber">
+              <PropertyRef Name="haberUyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_ToHaber">
+          <End Role="Haber" Type="Self.Haber" Multiplicity="1" />
+          <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Haber">
+              <PropertyRef Name="haberId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="yorumHaberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_ToUye">
+          <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
+          <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="uyeId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="yorumUyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB1Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Haber" EntityType="Self.Haber" />
+          <EntitySet Name="Kategori" EntityType="Self.Kategori" />
+          <EntitySet Name="Uye" EntityType="Self.Uye" />
+          <EntitySet Name="Yorum" EntityType="Self.Yorum" />
+          <AssociationSet Name="FK_Haber_ToKategori" Association="Self.FK_Haber_ToKategori">
+            <End Role="Kategori" EntitySet="Kategori" />
+            <End Role="Haber" EntitySet="Haber" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Haber_ToUye" Association="Self.FK_Haber_ToUye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="Haber" EntitySet="Haber" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_ToHaber" Association="Self.FK_Yorum_ToHaber">
+            <End Role="Haber" EntitySet="Haber" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_ToUye" Association="Self.FK_Yorum_ToUye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB1Model1StoreContainer" CdmEntityContainer="DB1Entities1">
+          <EntitySetMapping Name="Haber">
+            <EntityTypeMapping TypeName="DB1Model1.Haber">
+              <MappingFragment StoreEntitySet="Haber">
+                <ScalarProperty Name="haberId" ColumnName="haberId" />
+                <ScalarProperty Name="haberBaslik" ColumnName="haberBaslik" />
+                <ScalarProperty Name="haberDetay" ColumnName="haberDetay" />
+                <ScalarProperty Name="haberTarih" ColumnName="haberTarih" />
+                <ScalarProperty Name="haberKategoriId" ColumnName="haberKategoriId" />
+                <ScalarProperty Name="haberUyeId" ColumnName="haberUyeId" />
+                <ScalarProperty Name="haberOkuma" ColumnName="haberOkuma" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kategori">
+            <EntityTypeMapping TypeName="DB1Model1.Kategori">
+              <MappingFragment StoreEntitySet="Kategori">
+                <ScalarProperty Name="KategoriId" ColumnName="KategoriId" />
+                <ScalarProperty Name="KategoriAdi" ColumnName="KategoriAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uye">
+            <EntityTypeMapping TypeName="DB1Model1.Uye">
+              <MappingFragment StoreEntitySet="Uye">
+                <ScalarProperty Name="uyeId" ColumnName="uyeId" />
+                <ScalarProperty Name="kullaniciAdi" ColumnName="kullaniciAdi" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="sifre" ColumnName="sifre" />
+                <ScalarProperty Name="adSoyad" ColumnName="adSoyad" />
+                <ScalarProperty Name="fotograf" ColumnName="fotograf" />
+                <ScalarProperty Name="uyeAdmin" ColumnName="uyeAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Yorum">
+            <EntityTypeMapping TypeName="DB1Model1.Yorum">
+              <MappingFragment StoreEntitySet="Yorum">
+                <ScalarProperty Name="yorumId" ColumnName="yorumId" />
+                <ScalarProperty Name="yorumIcerik" ColumnName="yorumIcerik" />
+                <ScalarProperty Name="yorumUyeId" ColumnName="yorumUyeId" />
+                <ScalarProperty Name="yorumHaberId" ColumnName="yorumHaberId" />
+                <ScalarProperty Name="yorumTarih" ColumnName="yorumTarih" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

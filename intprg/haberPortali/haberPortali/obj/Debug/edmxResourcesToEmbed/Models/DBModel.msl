@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DB1ModelStoreContainer" CdmEntityContainer="DB1Entities">
+    <EntitySetMapping Name="Haber">
+      <EntityTypeMapping TypeName="DB1Model.Haber">
+        <MappingFragment StoreEntitySet="Haber">
+          <ScalarProperty Name="HaberId" ColumnName="HaberId" />
+          <ScalarProperty Name="HaberBaslik" ColumnName="HaberBaslik" />
+          <ScalarProperty Name="HaberDetay" ColumnName="HaberDetay" />
+          <ScalarProperty Name="HaberTarih" ColumnName="HaberTarih" />
+          <ScalarProperty Name="HaberKategoriId" ColumnName="HaberKategoriId" />
+          <ScalarProperty Name="HaberUyeId" ColumnName="HaberUyeId" />
+          <ScalarProperty Name="HaberOkuma" ColumnName="HaberOkuma" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Kategori">
+      <EntityTypeMapping TypeName="DB1Model.Kategori">
+        <MappingFragment StoreEntitySet="Kategori">
+          <ScalarProperty Name="KategoriId" ColumnName="KategoriId" />
+          <ScalarProperty Name="KategoriAdi" ColumnName="KategoriAdi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Uye">
+      <EntityTypeMapping TypeName="DB1Model.Uye">
+        <MappingFragment StoreEntitySet="Uye">
+          <ScalarProperty Name="UyeId" ColumnName="UyeId" />
+          <ScalarProperty Name="KullaniciAdi" ColumnName="KullaniciAdi" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+          <ScalarProperty Name="AdSoyad" ColumnName="AdSoyad" />
+          <ScalarProperty Name="UyeAdmin" ColumnName="UyeAdmin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
